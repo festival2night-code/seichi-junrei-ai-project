@@ -1,0 +1,15 @@
+git init                                     # 1. 初始化，讓 Git 開始監控這個資料夾
+git branch -M main                           # 2. 把預設主分支名稱改為國際標準的 main
+git remote add origin <你的GitHub倉庫網址>      # 3. 鋪設傳送門，把本地跟雲端 GitHub 連接起來
+
+git status                                   # 【步驟一】檢查狀態：看有哪些檔案被修改（紅字）
+git add .                                    # 【步驟二】打包：把當前目錄所有修改過的檔案放進進度盒
+git commit -m "feat: 寫下你今天改了什麼"       # 【步驟三】存檔：為這次改動拍下時空照片並備註
+git push                                     # 【步驟四】發射：將本地進度推上雲端 GitHub 備份
+
+git log                                      # 查看完整的歷史存檔紀錄（按 q 鍵可以退出畫面）
+git log --oneline                            # 簡短版歷史紀錄，一行秀出一個 Commit，非常清爽
+git remote -v                                # 檢查目前這個資料夾到底連接到哪一個 GitHub 帳號網址
+
+git restore <檔案名稱>                        # 救命藥 A：不小心把某個檔案改爛了，一鍵還原到上次存檔的狀態
+git restore .                                # 救命藥 B：把「所有」檔案一鍵還原到上次存檔，當作沒發生過這件事
