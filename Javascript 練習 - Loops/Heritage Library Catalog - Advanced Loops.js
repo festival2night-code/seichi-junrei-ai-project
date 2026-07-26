@@ -23,9 +23,11 @@ const rawCatalogCards = [
 function parseCard(rawString) {
   const parts = rawString.split("|");
   const trimmedParts = [];
+
   for (let i = 0; i < parts.length; i++) {
     trimmedParts.push(parts[i].trim());
   }
+
   const title = trimmedParts[0];
   const author = trimmedParts[1];
   const year = trimmedParts[2];
@@ -39,26 +41,30 @@ function parseCard(rawString) {
   };
 }
 
-function parseCatalog (rawCards){
+function parseCatalog(rawCards) {
   let catalog = [];
+
   for (let i = 0; i < rawCards.length; i++) {
     catalog.push(parseCard(rawCards[i]));
   }
+
   return catalog;
 };
 
 let catalog = parseCatalog(rawCatalogCards);
 //console.log(catalog);
 
-function findByAuthor(catalog, author){
-    let searchTerm = author.toLowerCase();
-    let results = [];
-for (let i = 0; i < catalog.length; i++) {
+function findByAuthor(catalog, author) {
+  let searchTerm = author.toLowerCase();
+  let results = [];
+
+  for (let i = 0; i < catalog.length; i++) {
     if (catalog[i].author.toLowerCase().includes(searchTerm)) {
-        results.push(catalog[i]);
+      results.push(catalog[i]);
     }
-}
-return results;
+  }
+
+  return results;
 }
 
 /*const kingBooks = findByAuthor(catalog, "king");
@@ -69,8 +75,10 @@ for (let i = 0; i < kingBooks.length; i++) {
 
 function groupByDecade(catalog) {
   const grouped = {};
+
   for (let i = 0; i < catalog.length; i++) {
     const book = catalog[i];
+
     if (book.year === "Unknown") {
       if (!grouped["Unknown"]) {
         grouped["Unknown"] = [];
@@ -78,17 +86,22 @@ function groupByDecade(catalog) {
       grouped["Unknown"].push(book);
       continue;
     }
+
     const decade = Math.floor(book.year / 10) * 10;
     const decadeKey = `${decade}s`;
+
     if (!grouped[decadeKey]) {
       grouped[decadeKey] = [];
     }
+
     grouped[decadeKey].push(book);
   }
+
   return grouped;
 }
 
 let byDecade = groupByDecade(catalog);
+
 function renderEntry(entry) {
   const title = entry.title || "Unknown";
   const author = entry.author || "Unknown";
@@ -106,20 +119,24 @@ function renderEntry(entry) {
 //console.log(renderEntry(catalog[0]));
 
 function validateEntry(entry) {
-let isValid = true;
-if (!entry.title || entry.title == "Unknown" || entry.title.trim() === "") {
-    
-  isValid = false;
-}
-if (!entry.author || entry.author == "Unknown" || entry.author.trim() === "") {
-  isValid = false;
-}
-if (!entry.year || entry.year == "Unknown" || isNaN(entry.year)) {
-  isValid = false;
-}
-if (!entry.location || entry.location == "Unknown" || entry.location.trim() === "") {
-  isValid = false;
-}
+  let isValid = true;
+
+  if (!entry.title || entry.title == "Unknown" || entry.title.trim() === "") {
+    isValid = false;
+  }
+
+  if (!entry.author || entry.author == "Unknown" || entry.author.trim() === "") {
+    isValid = false;
+  }
+
+  if (!entry.year || entry.year == "Unknown" || isNaN(entry.year)) {
+    isValid = false;
+  }
+
+  if (!entry.location || entry.location == "Unknown" || entry.location.trim() === "") {
+    isValid = false;
+  }
+
   return isValid;
 }
 
@@ -132,36 +149,41 @@ function exportToJson(catalog) {
 }
 
 function exportToCSV(catalog) {
-    const header = "Title,Author,Year,Location";
-    const rows = [];
+  const header = "Title,Author,Year,Location";
+  const rows = [];
 
-    for (let i = 0; i < catalog.length; i++) {
-      const entry = catalog[i];
-      const row = `"${entry.title}","${entry.author}",${entry.year},"${entry.location}"`;
-      rows.push(row);
-    }
+  for (let i = 0; i < catalog.length; i++) {
+    const entry = catalog[i];
+    const row = `"${entry.title}","${entry.author}",${entry.year},"${entry.location}"`;
+    rows.push(row);
+  }
 
-    let csv = header;
-    for (let i = 0; i < rows.length; i++) {
-        csv = csv + "\n" + rows[i];
-    }
-    return csv;
+  let csv = header;
+  for (let i = 0; i < rows.length; i++) {
+    csv = csv + "\n" + rows[i];
+  }
+
+  return csv;
 }
 
 console.log(exportToCSV(catalog))
 console.log(catalog.length);
 console.log(Object.keys(byDecade).length);
+
 let oldestYear = Infinity;
 let newestYear = 0;
+
 for (let i = 0; i < catalog.length; i++) {
-    if (catalog[i].year !== "Unknown") {
-        if (catalog[i].year < oldestYear) {
-            oldestYear = catalog[i].year;
-        }
-        if (catalog[i].year > newestYear) {
-            newestYear = catalog[i].year;
-        }
+  if (catalog[i].year !== "Unknown") {
+    if (catalog[i].year < oldestYear) {
+      oldestYear = catalog[i].year;
     }
+
+    if (catalog[i].year > newestYear) {
+      newestYear = catalog[i].year;
+    }
+  }
 }
+
 console.log(oldestYear);
 console.log(newestYear);
