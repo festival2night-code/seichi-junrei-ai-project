@@ -1,15 +1,20 @@
-import ProductCard from './ProductCard'  // 引入子元件
+import Counter from './Counter'
+import EventPractice from './EventPractice'
+import TodoList from './TodoList'
 
 function App() {
     return (
-        <div style={{ textAlign: 'center', padding: '50px' }}>
-            <h1> Props </h1>
-            
-            <ProductCard name="Smartphone" price={100} inStock={true} />
-            <ProductCard name="Laptop" price={200} inStock={false} />
-            <ProductCard name="Tablet" price={150} inStock={true} />
+        <div>
+            <Counter />
+            <hr />
+            <EventPractice />
+            <hr />
+            <TodoList />
         </div>
     )
 }
+
+            
+
 
 export default App
